@@ -1,5 +1,11 @@
 # @lynx-js/react
 
+## 0.105.3
+
+### Patch Changes
+
+- Modified the format of data sent from background threads to the main thread. ([#207](https://github.com/lynx-family/lynx-stack/pull/207))
+
 ## 0.105.2
 
 ### Patch Changes

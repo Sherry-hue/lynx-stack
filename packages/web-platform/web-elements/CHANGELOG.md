@@ -1,5 +1,15 @@
 # @lynx-js/web-elements
 
+## 0.5.0
+
+### Minor Changes
+
+- feat(web): The list element supports list-type with **flow**. ([#240](https://github.com/lynx-family/lynx-stack/pull/240))
+
+  It supports all attributes and events under single, and also provides `full-span`.
+
+  For detailed usage, please refer to the official website.
+
 ## 0.4.0
 
 ### Minor Changes

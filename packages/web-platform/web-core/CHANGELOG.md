@@ -1,5 +1,61 @@
 # @lynx-js/web-core
 
+## 0.9.0
+
+### Minor Changes
+
+- feat: `nativeModulesUrl` of lynx-view is changed to `nativeModulesMap`, and the usage is completely aligned with `napiModulesMap`. ([#220](https://github.com/lynx-family/lynx-stack/pull/220))
+
+  "warning: This is a breaking change."
+
+  `nativeModulesMap` will be a map: key is module-name, value should be a esm url which export default a
+  function with two parameters(you never need to use `this`):
+
+  - `NativeModules`: oriented `NativeModules`, which you can use to call
+    other Native-Modules.
+
+  - `NativeModulesCall`: trigger `onNativeModulesCall`, same as the deprecated `this.nativeModulesCall`.
+
+  example:
+
+  ```js
+  const nativeModulesMap = {
+    CustomModule: URL.createObjectURL(
+      new Blob(
+        [
+          `export default function(NativeModules, NativeModulesCall) {
+      return {
+        async getColor(data, callback) {
+          const color = await NativeModulesCall('getColor', data);
+          callback(color);
+        },
+      }
+    };`,
+        ],
+        { type: 'text/javascript' },
+      ),
+    ),
+  };
+  lynxView.nativeModulesMap = nativeModulesMap;
+  ```
+
+  In addition, we will use Promise.all to load `nativeModules`, which will optimize performance in the case of multiple modules.
+
+- refractor: remove entryId concept ([#217](https://github.com/lynx-family/lynx-stack/pull/217))
+
+  After the PR #198
+  All contents are isolated by a shadowroot.
+  Therefore we don't need to add the entryId selector to avoid the lynx-view's style taking effect on the whole page.
+
+### Patch Changes
+
+- fix: When the width and height of lynx-view are not auto, the width and height of the `lynx-tag="page"` need to be correctly set to 100%. ([#228](https://github.com/lynx-family/lynx-stack/pull/228))
+
+- Updated dependencies [[`5b5e090`](https://github.com/lynx-family/lynx-stack/commit/5b5e090fdf0e896f1c38a49bf3ed9889117c4fb8), [`d2d55ef`](https://github.com/lynx-family/lynx-stack/commit/d2d55ef9fe438c35921d9db0daa40d5228822ecc)]:
+  - @lynx-js/web-worker-runtime@0.9.0
+  - @lynx-js/web-constants@0.9.0
+  - @lynx-js/web-worker-rpc@0.9.0
+
 ## 0.8.0
 
 ### Minor Changes
