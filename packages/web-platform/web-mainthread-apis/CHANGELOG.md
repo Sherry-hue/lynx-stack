@@ -1,5 +1,20 @@
 # @lynx-js/web-mainthread-apis
 
+## 0.9.0
+
+### Minor Changes
+
+- refractor: remove entryId concept ([#217](https://github.com/lynx-family/lynx-stack/pull/217))
+
+  After the PR #198
+  All contents are isolated by a shadowroot.
+  Therefore we don't need to add the entryId selector to avoid the lynx-view's style taking effect on the whole page.
+
+### Patch Changes
+
+- Updated dependencies [[`5b5e090`](https://github.com/lynx-family/lynx-stack/commit/5b5e090fdf0e896f1c38a49bf3ed9889117c4fb8), [`d2d55ef`](https://github.com/lynx-family/lynx-stack/commit/d2d55ef9fe438c35921d9db0daa40d5228822ecc)]:
+  - @lynx-js/web-constants@0.9.0
+
 ## 0.8.0
 
 ### Minor Changes

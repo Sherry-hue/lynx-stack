@@ -1,5 +1,11 @@
 # @lynx-js/web-webpack-plugin
 
+## 0.6.3
+
+### Patch Changes
+
+- chore: remove unused file ([#217](https://github.com/lynx-family/lynx-stack/pull/217))
+
 ## 0.6.2
 
 ### Patch Changes
