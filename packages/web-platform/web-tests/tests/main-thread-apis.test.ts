@@ -1395,4 +1395,157 @@ test.describe('main thread api tests', () => {
     expect(ret.cssID).toBe('8');
     expect(ret.name).toBe('name2');
   });
+
+  test(
+    'list update-list-info should insert at correct position',
+    async ({ page }, { title }) => {
+      const result = await page.evaluate(async () => {
+        const list = globalThis.__CreateList(
+          0,
+          (list, listID, cellIndex, operationID, enableReuseNotification) => {
+            const item = globalThis.__CreateView(0);
+            item.setAttribute('data-content', 'B');
+            globalThis.__AppendElement(list, item);
+            return globalThis.__GetElementUniqueID(item);
+          },
+          (list, listID, sign) => {},
+        );
+
+        const itemA = globalThis.__CreateView(0);
+        itemA.setAttribute('data-content', 'A');
+        globalThis.__AppendElement(list, itemA);
+
+        const updateInfo = {
+          insertAction: [
+            { position: 0, type: 'type' },
+          ],
+          removeAction: [],
+        };
+
+        globalThis.__SetAttribute(list, 'update-list-info', updateInfo);
+
+        await new Promise(resolve => setTimeout(resolve, 0));
+
+        const children = list.children;
+        return {
+          count: children.length,
+          firstContent: children[0].getAttribute('data-content'),
+          secondContent: children[1].getAttribute('data-content'),
+        };
+      });
+
+      expect(result.count).toBe(2);
+      expect(result.firstContent).toBe('B');
+      expect(result.secondContent).toBe('A');
+    },
+  );
+
+  test(
+    'list update-list-info should remove at correct position',
+    async ({ page }, { title }) => {
+      const result = await page.evaluate(async () => {
+        let recycledSign = -1;
+        const list = globalThis.__CreateList(
+          0,
+          (list, listID, cellIndex, operationID, enableReuseNotification) => {
+            return 0;
+          },
+          (list, listID, sign) => {
+            recycledSign = sign;
+          },
+        );
+
+        const itemA = globalThis.__CreateView(0);
+        itemA.setAttribute('data-content', 'A');
+        const itemB = globalThis.__CreateView(0);
+        itemB.setAttribute('data-content', 'B');
+        const itemC = globalThis.__CreateView(0);
+        itemC.setAttribute('data-content', 'C');
+
+        globalThis.__AppendElement(list, itemA);
+        globalThis.__AppendElement(list, itemB);
+        globalThis.__AppendElement(list, itemC);
+
+        const bUniqueId = globalThis.__GetElementUniqueID(itemB);
+
+        const updateInfo = {
+          insertAction: [],
+          removeAction: [1], // Remove B
+        };
+
+        globalThis.__SetAttribute(list, 'update-list-info', updateInfo);
+
+        await new Promise((resolve) => setTimeout(resolve, 0));
+
+        const children = list.children;
+        return {
+          count: children.length,
+          firstContent: children[0].getAttribute('data-content'),
+          secondContent: children[1].getAttribute('data-content'),
+          recycledSign: recycledSign,
+          expectedRecycledSign: bUniqueId,
+        };
+      });
+
+      expect(result.count).toBe(2);
+      expect(result.firstContent).toBe('A');
+      expect(result.secondContent).toBe('C');
+      expect(result.recycledSign).toBe(result.expectedRecycledSign);
+    },
+  );
+
+  test(
+    'list update-list-info should handle mixed insert and remove',
+    async ({ page }, { title }) => {
+      const result = await page.evaluate(async () => {
+        const list = globalThis.__CreateList(
+          0,
+          (list, listID, cellIndex, operationID, enableReuseNotification) => {
+            const item = globalThis.__CreateView(0);
+            item.setAttribute('data-content', 'D');
+            globalThis.__AppendElement(list, item);
+            return globalThis.__GetElementUniqueID(item);
+          },
+          (list, listID, sign) => {},
+        );
+
+        const itemA = globalThis.__CreateView(0);
+        itemA.setAttribute('data-content', 'A');
+        const itemB = globalThis.__CreateView(0);
+        itemB.setAttribute('data-content', 'B');
+        const itemC = globalThis.__CreateView(0);
+        itemC.setAttribute('data-content', 'C');
+
+        globalThis.__AppendElement(list, itemA);
+        globalThis.__AppendElement(list, itemB);
+        globalThis.__AppendElement(list, itemC);
+
+        // Initial: [A, B, C]
+        // Remove 1 (B) -> [A, C]
+        // Insert at 0 (D) -> [D, A, C]
+
+        const updateInfo = {
+          insertAction: [{ position: 0, type: 'type' }],
+          removeAction: [1],
+        };
+
+        globalThis.__SetAttribute(list, 'update-list-info', updateInfo);
+
+        await new Promise((resolve) => setTimeout(resolve, 0));
+
+        const children = list.children;
+        return {
+          count: children.length,
+          c0: children[0].getAttribute('data-content'),
+          c1: children[1].getAttribute('data-content'),
+          c2: children[2].getAttribute('data-content'),
+        };
+      });
+
+      expect(result.count).toBe(3);
+      expect(result.c0).toBe('D');
+      expect(result.c1).toBe('A');
+      expect(result.c2).toBe('C');
+    },
+  );
 });
