@@ -1,0 +1,118 @@
+packages/genui/server/app/a2ui/_shared.ts
+  b04b85a08042bbeb 25-28,30,33-47,75-154 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a0a8886e9119851cd8d4bd3","tool_type":"agent","tool_id":"SearchReplace","line_ranges":[{"Range":[25,28]},{"Single":30},{"Range":[33,47]},{"Range":[75,154]}]}]}
+packages/genui/a2ui-playground/src/pages/AIChatPage.tsx
+  b04b85a08042bbeb 120 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a0a8886e9119851cd8d4bd3","tool_type":"agent","tool_id":"SearchReplace","line_ranges":[{"Single":120}]}]}
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.4",
+  "base_commit_sha": "bc9a270f44a980eacaddf9f6115530dd2347010a",
+  "prompts": {
+    "b04b85a08042bbeb": {
+      "agent_id": {
+        "tool": "trae",
+        "id": "6a0a8417e9119851cd8d4b86",
+        "model": "openrouter-2o__dev"
+      },
+      "human_author": "Sherry-hue <37186915+Sherry-hue@users.noreply.github.com>",
+      "messages": [],
+      "total_additions": 5,
+      "total_deletions": 4,
+      "accepted_lines": 5,
+      "overriden_lines": 0
+    }
+  },
+  "attestation_metadata": {
+    "packages/genui/a2ui-playground/src/pages/AIChatPage.tsx": [
+      {
+        "hash": "b04b85a08042bbeb",
+        "line_ranges": [
+          {
+            "Single": 120
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a0a8886e9119851cd8d4bd3",
+            "tool_type": "agent",
+            "tool_id": "SearchReplace",
+            "line_ranges": [
+              {
+                "Single": 120
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "packages/genui/server/app/a2ui/_shared.ts": [
+      {
+        "hash": "b04b85a08042bbeb",
+        "line_ranges": [
+          {
+            "Range": [
+              25,
+              28
+            ]
+          },
+          {
+            "Single": 30
+          },
+          {
+            "Range": [
+              33,
+              47
+            ]
+          },
+          {
+            "Range": [
+              75,
+              154
+            ]
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a0a8886e9119851cd8d4bd3",
+            "tool_type": "agent",
+            "tool_id": "SearchReplace",
+            "line_ranges": [
+              {
+                "Range": [
+                  25,
+                  28
+                ]
+              },
+              {
+                "Single": 30
+              },
+              {
+                "Range": [
+                  33,
+                  47
+                ]
+              },
+              {
+                "Range": [
+                  75,
+                  154
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "remote_transcripts": {
+    "b04b85a08042bbeb": {
+      "tool": "trae",
+      "conversation_id": "6a0a8417e9119851cd8d4b86",
+      "session_id": "6a0a8417e9119851cd8d4b86",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    }
+  }
+}
